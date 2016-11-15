@@ -1,4 +1,9 @@
-module Shapes(Shape(..), empty, circle, square) where
+module Shape
+  (Shape(..)
+  , empty
+  , circle
+  , square
+  ) where
 
 data Shape = Empty
            | Circle

@@ -4,16 +4,18 @@ import Text.Blaze.Svg.Renderer.Utf8 (renderSvg)
 import Web.Scotty
 
 import Render
-import Shapes
+import Shape
+import Style
 import Transform
 
 svg drawing = do
   setHeader "Content-Type" "image/svg+xml"
-  setHeader "Vary" "Accept-Encoding"
   raw $ renderSvg drawing
 
 main :: IO ()
 main = scotty 3000 $ do
-  get "/" $ Web.Scotty.text "hello world!"
+  get "/" $ text "hello world!"
 
-  get "/demo" $ svg $ render [(identity, circle)]
+  get "/test" $ svg $ render [
+    (scale 10 10 <+> rotate 60, square, [strokeWidth 1, stroke blue, fill (rgb 255 182 193)])
+    ]
