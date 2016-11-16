@@ -17,5 +17,5 @@ main = scotty 3000 $ do
   get "/" $ text "hello world!"
 
   get "/test" $ svg $ render [
-    (scale 10 10 <+> rotate 60, square, [strokeWidth 1, stroke blue, fill (rgb 255 182 193)])
+    (read "Scale 10 10 :+: Rotate 20" :: Transform, square, [strokeWidth 1, stroke blue, fill (rgb 255 182 193)])
     ]

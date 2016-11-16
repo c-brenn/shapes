@@ -21,7 +21,8 @@ data Transform
   | Translate Double Double
   | Scale Double Double
   | Rotate Double
-  | Compose Transform Transform
+  | Transform :+: Transform
+  deriving (Read, Show)
 
 -- Functions to build an AST in the transform DSL
 identity :: Transform
@@ -35,7 +36,7 @@ rotate :: Double -> Transform
 rotate = Rotate
 
 (<+>) :: Transform -> Transform -> Transform
-(<+>) = Compose
+(<+>) t1 t2 = t1 :+: t2
 
 -- Points are represented by the vector [x, y, 1]
 -- transformations can then be represented as 3x3 matrices
@@ -52,4 +53,4 @@ transform (Rotate degrees) = Matrix.fromLists [ [cos rad, -(sin rad), 0],
                                                 [sin rad, cos rad,    0],
                                                 [0,       0,          0] ]
   where rad = (degrees * pi) / 180
-transform (Compose t1 t2)  = Matrix.multStd2 (transform t1) (transform t2)
+transform (t1 :+: t2)  = Matrix.multStd2 (transform t1) (transform t2)
