@@ -1,15 +1,6 @@
-module Shape
-  (Shape(..)
-  , empty
-  , circle
-  , square
-  ) where
+module Shape (Shape(..)) where
 
 data Shape = Empty
            | Circle
            | Square
-
-empty, circle, square :: Shape
-empty  = Empty
-circle = Circle
-square = Square
+           deriving Read

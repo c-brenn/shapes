@@ -1,12 +1,4 @@
-module Transform
-  ( Transform(..)
-  , identity
-  , translate
-  , scale
-  , rotate
-  , (<+>)
-  , transform
-  ) where
+module Transform ( Transform(..) , transform) where
 
 import qualified Data.Matrix as Matrix
   ( Matrix(..)
@@ -23,20 +15,6 @@ data Transform
   | Rotate Double
   | Transform :+: Transform
   deriving (Read, Show)
-
--- Functions to build an AST in the transform DSL
-identity :: Transform
-identity = Identity
-
-translate, scale :: Double -> Double -> Transform
-translate = Translate
-scale = Scale
-
-rotate :: Double -> Transform
-rotate = Rotate
-
-(<+>) :: Transform -> Transform -> Transform
-(<+>) t1 t2 = t1 :+: t2
 
 -- Points are represented by the vector [x, y, 1]
 -- transformations can then be represented as 3x3 matrices

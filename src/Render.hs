@@ -1,4 +1,4 @@
-module Render (render) where
+module Render (render, Drawing(..)) where
 
 import Control.Monad (forM_)
 import Data.Matrix   (getElem, toLists)
@@ -11,6 +11,7 @@ import Transform (Transform(..))
 import qualified Transform as T (transform)
 
 type Object  = (Transform, Shape, [Style])
+
 type Drawing = [Object]
 
 render :: Drawing -> Svg

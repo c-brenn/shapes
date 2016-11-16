@@ -1,10 +1,4 @@
-module Colour
-  ( Colour(..)
-  , white
-  , black
-  , blue
-  , rgb
-  ) where
+module Colour ( Colour(..)) where
 
 import Text.Printf (printf)
 
@@ -13,14 +7,7 @@ data Colour
   | Black
   | Blue
   | RGB Int Int Int
-
-white,black,blue :: Colour
-white = White
-black = Black
-blue  = Blue
-rgb :: Int -> Int -> Int -> Colour
-rgb   = RGB
-
+  deriving Read
 
 instance Show Colour where
   show White = "white"
