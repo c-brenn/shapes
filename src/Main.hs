@@ -3,10 +3,11 @@ module Main where
 import Text.Blaze.Svg.Renderer.Utf8 (renderSvg)
 import Web.Scotty
 
+import qualified Data.Text.Lazy as TL
+import qualified Data.Text as T
+import Text.Read (readMaybe)
+
 import Render
-import Shape
-import Style
-import Transform
 
 svg drawing = do
   setHeader "Content-Type" "image/svg+xml"
@@ -14,9 +15,19 @@ svg drawing = do
 
 main :: IO ()
 main = scotty 3000 $ do
-  get "/" $ text "hello world!"
+  get "/" $ file "web/index.html"
+  get "/static/shapes.js" $ file "web/elm/shapes.js"
 
-  get "/test" $ svg $ render (read testDrawing :: Drawing)
+  get "/drawing" $ do
+    input <- param "input"
+    let drawing = (read $ T.unpack $ TL.toStrict input) :: Drawing
+    svg $ render drawing
 
-testDrawing :: String
-testDrawing = "[(Scale 10 10 :+: Rotate 20, Square, [StrokeWidth 1, Fill (RGB 255 182 193), Stroke Blue])]"
+  get "/validate" $ do
+    input <- param "input"
+    let respStatus =
+          case (readMaybe $ T.unpack $ TL.toStrict input) :: Maybe Drawing of
+            Nothing -> 422
+            _ -> 200
+    status $ toEnum respStatus
+    addHeader "Access-Control-Allow-Origin" "*"

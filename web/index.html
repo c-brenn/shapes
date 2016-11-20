@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+              crossorigin="anonymous">
+        <script type="text/javascript"  src="/static/shapes.js"></script>
+        <style>
+         #header {
+             text-align: center;
+         }
+         #drawing {
+             width: 100%;
+             height: 55%;
+             margin-bottom: 2px;
+             border-radius: 5px;
+             border: 1px solid #ccc;
+         }
+         #drawing-input {
+             background-color: #4a4a4a;
+             color: white;
+             border: none;
+             height: 30% !important;
+             resize: none;
+         }
+         .valid {
+             border: 3px solid #4a4a4a !important;
+         }
+         .invalid {
+             border: 3px solid #d48786 !important;
+         }
+        </style>
+    </head>
+    <body>
+        <div id="main"></div>
+        <script type="text/javascript" >
+         const elmDiv = document.getElementById("main");
+         const elmApp = Elm.Shapes.embed(elmDiv);
+        </script>
+    </body>
+</html>

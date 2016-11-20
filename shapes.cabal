@@ -20,7 +20,8 @@ executable shapes
   build-depends:       base,
                        blaze-svg,
                        matrix,
-                       scotty
+                       scotty,
+                       text
   other-modules:       Colour,
                        Render,
                        Shape,
