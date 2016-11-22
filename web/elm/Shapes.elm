@@ -24,11 +24,14 @@ type alias Model =
 init : (Model, Cmd Msg)
 init =
     let initialModel =
-            { input  = ""
+            { input  = initialInput
             , iframeSrc = shapeServerPrefix ++ "[]"
             , valid  = True
             }
-    in (initialModel, Cmd.none)
+    in (initialModel, validateInput initialModel.input)
+
+initialInput : String
+initialInput = "[\n([Scale 5 5], Circle, [Fill Blue, Stroke Black, StrokeWidth 2.0])\n]"
 
 shapeServerPrefix : String
 shapeServerPrefix = "http://localhost:3000"
@@ -59,11 +62,15 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div [ class "container"]
-        [ h2 [id "header"] [text "SVG"]
+        [ div [id "header"]
+              [ h2 [] [a [href "https://github.com/c-brenn/shapes", target "_blank"] [text "Shapely"]]
+              , h4 [] [text "Conor Brennan - 13327472"]
+              ]
         , iframe [id "drawing", src model.iframeSrc] []
         , textarea
                   [ class ("form-control" ++ valid model)
                   , id "drawing-input"
+                  , value model.input
                   , onInput NewInput
                   ]
                   []

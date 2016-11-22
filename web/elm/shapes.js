@@ -9036,14 +9036,7 @@ var _user$project$Shapes$valid = function (model) {
 	return model.valid ? ' valid' : ' invalid';
 };
 var _user$project$Shapes$shapeServerPrefix = 'http://localhost:3000';
-var _user$project$Shapes$init = function () {
-	var initialModel = {
-		input: '',
-		iframeSrc: A2(_elm_lang$core$Basics_ops['++'], _user$project$Shapes$shapeServerPrefix, '[]'),
-		valid: true
-	};
-	return {ctor: '_Tuple2', _0: initialModel, _1: _elm_lang$core$Platform_Cmd$none};
-}();
+var _user$project$Shapes$initialInput = '[\n([Scale 5 5], Circle, [Fill Blue, Stroke Black, StrokeWidth 2.0])\n]';
 var _user$project$Shapes$Model = F3(
 	function (a, b, c) {
 		return {input: a, iframeSrc: b, valid: c};
@@ -9062,7 +9055,7 @@ var _user$project$Shapes$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$h2,
+				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$id('header'),
@@ -9070,8 +9063,41 @@ var _user$project$Shapes$view = function (model) {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text('SVG'),
-					_1: {ctor: '[]'}
+					_0: A2(
+						_elm_lang$html$Html$h2,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$a,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$href('https://github.com/c-brenn/shapes'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$target('_blank'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Shapely'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$h4,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Conor Brennan - 13327472'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}),
 			_1: {
 				ctor: '::',
@@ -9103,8 +9129,12 @@ var _user$project$Shapes$view = function (model) {
 								_0: _elm_lang$html$Html_Attributes$id('drawing-input'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onInput(_user$project$Shapes$NewInput),
-									_1: {ctor: '[]'}
+									_0: _elm_lang$html$Html_Attributes$value(model.input),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onInput(_user$project$Shapes$NewInput),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
@@ -9125,6 +9155,18 @@ var _user$project$Shapes$validateInput = function (input) {
 	var request = _elm_lang$http$Http$getString(url);
 	return A2(_elm_lang$http$Http$send, _user$project$Shapes$Validate, request);
 };
+var _user$project$Shapes$init = function () {
+	var initialModel = {
+		input: _user$project$Shapes$initialInput,
+		iframeSrc: A2(_elm_lang$core$Basics_ops['++'], _user$project$Shapes$shapeServerPrefix, '[]'),
+		valid: true
+	};
+	return {
+		ctor: '_Tuple2',
+		_0: initialModel,
+		_1: _user$project$Shapes$validateInput(initialModel.input)
+	};
+}();
 var _user$project$Shapes$update = F2(
 	function (msg, model) {
 		var _p0 = msg;

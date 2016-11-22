@@ -45,4 +45,4 @@ attributeFromString :: Show a => a -> AttributeValue
 attributeFromString = stringValue . show
 
 svgBoilerplate :: Svg -> Svg
-svgBoilerplate = docTypeSvg ! version "1.1" ! viewbox "-50 -50 100 100"
+svgBoilerplate = docTypeSvg ! version "1.1" ! viewbox "-25 -25 50 50"
