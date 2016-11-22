@@ -13,6 +13,7 @@ data Transform
   | Translate Double Double
   | Scale Double Double
   | Rotate Double
+  | Skew Double Double
   | Transform :+: Transform
   deriving (Read, Show)
 
@@ -30,5 +31,15 @@ transform (Scale x y)      = Matrix.fromLists [ [x, 0 ,0],
 transform (Rotate degrees) = Matrix.fromLists [ [cos rad, -(sin rad), 0],
                                                 [sin rad, cos rad,    0],
                                                 [0,       0,          0] ]
-  where rad = (degrees * pi) / 180
+  where rad = deg2rad degrees
+transform (Skew degX degY) = Matrix.multStd2 skewX skewY
+  where
+    radX = deg2rad degX
+    radY = deg2rad degY
+    skewX =  Matrix.fromLists [[1, tan radX, 0], [0,        1, 0], [0, 0, 1]]
+    skewY =  Matrix.fromLists [[1, 0,        0], [tan radY, 1, 0], [0, 0, 1]]
+
 transform (t1 :+: t2)  = Matrix.multStd2 (transform t1) (transform t2)
+
+deg2rad :: Floating a => a -> a
+deg2rad degrees = (degrees * pi) / 180
